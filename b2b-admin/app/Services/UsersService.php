@@ -72,12 +72,12 @@ class UsersService
     {
         return 
         [
-            'name.required' => __('validation.first_last_name_required'),
-            'email.required' => __('validation.email_required'),
-            'email.email' => __('validation.email_email_is_not_email'),
-            'email.unique' => __('validation.email_unique'),
-            'password.required' => __('validation.password_required'),
-            'password.min' => __('validation.password_to_short'),
+            'name.required' => __('view.validation.required.first_last_name'),
+            'email.required' => __('view.validation.required.email'),
+            'email.email' => __('view.validation.error.email'),
+            'email.unique' => __('view.validation.unique.emai'),
+            'password.required' => __('view.validation.required.password'),
+            'password.min' => __('view.validation.lenght.password'),
         ];
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Dto\GridDto;
 use App\Models\Enums\AlertsTypesEnum;
 use App\Models\Enums\ButtonsEnum;
 use App\Models\Enums\ButtonTypesEnum;
@@ -21,7 +20,6 @@ class BaseController extends Controller
     protected ButtonsEnum $buttonsEnum;
     protected ButtonTypesEnum $buttonTypesEnum;
     protected Application $application;
-    protected GridDto $grid;
 
     function __construct(?string $prefix = null)
     {
@@ -29,7 +27,6 @@ class BaseController extends Controller
         $this->alertsTypesEnum = new AlertsTypesEnum();
         $this->buttonsEnum = new ButtonsEnum();
         $this->buttonTypesEnum = new ButtonTypesEnum();
-        $this->grid = new GridDto();
     }
 
     protected function init()

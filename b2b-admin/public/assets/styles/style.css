@@ -1,5 +1,6 @@
 .nav-link-user-dropdown {
-    padding: 0;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
 }
 .nav-link-user-dropdown .info {
     display: inline-block;
@@ -44,6 +45,9 @@
 .margin-right-10 {
     margin-right: 10px;
 }
+.width-100p {
+    width: 100%;
+}
 .content-header .btn {
     margin-left: 10px;
 }
@@ -58,4 +62,7 @@
 }
 .links .small.text-muted {
    display: none !important;
+}
+.buttons-bottom {
+    padding-bottom: 20px;
 }

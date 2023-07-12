@@ -29,7 +29,7 @@ Route::group( ['middleware' => 'auth' ], function()
 {
     Route::controller(AccountController::class)->group(function () 
     {
-        Route::get('/account', 'show')->name('account');
+        Route::get('/account', 'edit')->name('account');
         Route::put('/account', 'update')->name('account.update');
     });
 

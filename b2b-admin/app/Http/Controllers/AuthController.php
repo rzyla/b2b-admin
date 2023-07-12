@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\AlertsTypesEnum;
 use App\Http\Controllers\BaseController;
+use App\Services\AuthService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,20 +30,14 @@ class AuthController extends BaseController
             ->with('alertsTypesEnum', $this->alertsTypesEnum);
     }
 
-    public function login(Request $request)
+    public function login(Request $request, AuthService $authService)
     {
-        $messages = 
-        [
-            'email.required' => __('validation.email_required'),
-            'password.required' => __('validation.password_required'),
-        ];
-        
-
         $request->validate(
         [
             'email' => 'required',
             'password' => 'required',
-        ], $messages);
+        ], 
+        $authService->validationMessages());
     
         $credentials = $request->only('email', 'password');
         $remember = !empty($request['remember']) ? true : false;
@@ -55,7 +50,7 @@ class AuthController extends BaseController
 
         return redirect()
                 ->back()
-                ->withErrors(__('validation.login_password_error'))
+                ->withErrors(__('view.validation.error.login_password'))
                 ->withInput($request->only('email'));
     }
 

@@ -13,14 +13,14 @@
     </head>
     <body class="hold-transition login-page">
         <div class="login-box">
-        <div class="login-logo">{{ $application->name }}</div>
+        <div class="login-logo">{{ $application->getName() }}</div>
             @include('_partials/alert')
             <div class="card">
                 <div class="card-body login-card-body">
                     <form action="{{ route('login') }}" method="post">
                     @csrf
                         <div class="input-group mb-3">
-                            <input type="email" name="email"  value="{{ !empty(old('email')) ? old('email') : '' }}" class="form-control" placeholder="{{ __('form.email_address_placeholder') }}">
+                            <input type="email" name="email"  value="{{ !empty(old('email')) ? old('email') : '' }}" class="form-control" placeholder="{{ __('view.auth.placeholder.email_address') }}">
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                     <span class="fas fa-envelope"></span>
@@ -28,7 +28,7 @@
                             </div>
                         </div>
                         <div class="input-group mb-3">
-                            <input type="password" name="password" class="form-control" placeholder="{{ __('form.password_placeholder') }}">
+                            <input type="password" name="password" class="form-control" placeholder="{{ __('view.auth.placeholder.password') }}">
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                     <span class="fas fa-lock"></span>
@@ -39,11 +39,11 @@
                             <div class="col-8">
                                 <div class="icheck-primary">
                                     <input type="checkbox" id="remember" name="remember">
-                                    <label for="remember">{{ __('labels.remember_me') }}</label>
+                                    <label for="remember">{{ __('view.auth.label.remember_me') }}</label>
                                 </div>
                             </div>
                             <div class="col-4">
-                                <button type="submit" class="btn btn-primary btn-block">{{ __('common.button_login') }}</button>
+                                <button type="submit" class="btn btn-primary btn-block">{{ __('view.button.login') }}</button>
                             </div>
                         </div>
                     </form>

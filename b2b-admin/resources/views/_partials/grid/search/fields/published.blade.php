@@ -1,0 +1,14 @@
+<label>{{ $label }}</label>
+<select name="filters[published]" class="form-control select2-no-search">
+    <option>&nbsp;</option>
+    @if($application->getFilter('published') == "0")
+        <option value="0" selected>{{ __('view.no') }}</option>
+    @else
+        <option value="0">{{ __('view.no') }}</option>
+    @endif
+    @if($application->getFilter('published') == "1")
+        <option value="1" selected>{{ __('view.yes') }}</option>
+    @else
+        <option value="1">{{ __('view.yes') }}</option>
+    @endif
+</select>

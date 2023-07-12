@@ -6,10 +6,10 @@ use Illuminate\Support\Facades\Session;
 
 class Application 
 {
-    public string $name;
+    private string $name;
     private ?string $title;
-    public ?string $prefix;
-    public string $success;
+    private ?string $prefix;
+    private string $success;
     public string $uploadSourceDir;
     public string $uploadThumbsDir;
     private int $minimum_password_length = 6;
@@ -40,27 +40,24 @@ class Application
 
     private function InitLocalizer()
     {
-        $this->name = __('common.application_name');
-        $this->meta->title = __('common.application_default_title');
+        $this->name = __('view.application.name');
+        $this->meta->title = __('view.application.default.title');
     }
 
     private function InitBreadcrumb()
     {
         $this->breadcrumb = new ApplicationBreadcrumb();
-        $this->breadcrumb->add(__('common.menu_dashboard'), 'dashboard', []);
+        $this->breadcrumb->add(__('view.sidebar.link.dashboard'), 'dashboard', []);
 
         if(!empty($this->prefix))
         {
-            $this->breadcrumb->add(__('common.menu_' . $this->prefix), $this->prefix, []);
+            $this->breadcrumb->add(__('view.sidebar.link.' . $this->prefix), $this->prefix, []);
         }
     }
     
     public function InitSessionMessages()
     {
-        if(!empty(Session::get('success')))
-        {
-            $this->success = Session::get('success');
-        }
+        $this->success = !empty(Session::get('success')) ? Session::get('success') : '';
     }
 
     public function InitUser(?User $user)
@@ -76,6 +73,16 @@ class Application
     public function paginate()
     {
         return $this->paginate;
+    }
+
+    public function getPrefix()
+    {
+        return $this->prefix;
+    }
+
+    public function getName()
+    {
+        return $this->name;
     }
 
     public function setTitle(?string $title)
@@ -117,6 +124,11 @@ class Application
     public function getOrderDir(string $key = 'orderDir')
     {
         return $this->filters->get($this->prefix, $key);
+    }
+
+    public function getSuccess()
+    {
+        return $this->success;
     }
 }
 

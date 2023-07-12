@@ -13,9 +13,9 @@
         <span class="info">{{ $application->user->name }}</span>
       </a>
       <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
-        <a href="{{ route('account') }}" class="dropdown-item dropdown-footer">{{ __('common.menu_account') }}</a>
+        <a href="{{ route('account') }}" class="dropdown-item dropdown-footer">{{ __('view.navbar.link.account') }}</a>
         <div class="dropdown-divider"></div>
-        <a href="{{ route('logout') }}" class="dropdown-item dropdown-footer">{{ __('common.button_logout') }}</a>
+        <a href="{{ route('logout') }}" class="dropdown-item dropdown-footer">{{ __('view.button.logout') }}</a>
       </div>
     </li>
   </ul>

@@ -9,15 +9,22 @@
     <link rel="stylesheet" href="/assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
     <link rel="stylesheet" href="/assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <link rel="stylesheet" href="/assets/plugins/jqvmap/jqvmap.min.css">
-    <link rel="stylesheet" href="/assets/styles/adminlte.min.css">
     <link rel="stylesheet" href="/assets/styles/style.css">
     <link rel="stylesheet" href="/assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
     <link rel="stylesheet" href="/assets/plugins/daterangepicker/daterangepicker.css">
     <link rel="stylesheet" href="/assets/plugins/summernote/summernote-bs4.min.css">
+    <link rel="stylesheet" href="/assets/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="/assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+    <link rel="stylesheet" href="/assets/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
+    <link rel="stylesheet" href="/assets/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
+    <link rel="stylesheet" href="/assets/plugins/bs-stepper/css/bs-stepper.min.css">
+    <link rel="stylesheet" href="/assets/plugins/dropzone/min/dropzone.min.css">
+    <link rel="stylesheet" href="/assets/styles/adminlte.min.css">
+
     @yield('styles')
     <style>
         .custom-file-label:after {
-            content: "{{ __('form.select_file_to_upload') }}" !important;
+            content: "{{ __('view.form.select_file_to_upload') }}" !important;
         }
     </style>
     <title>{{ $application->meta->title }} - {{ $application->getTitle() }}</title>
@@ -44,6 +51,7 @@
     </script>
     <script src="/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="/assets/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+    <script src="/assets/plugins/select2/js/select2.full.min.js"></script>
     <script src="/assets/scripts/adminlte.min.js"></script>
     <script src="/assets/scripts/script.js"></script>
 
@@ -60,6 +68,13 @@
     <script>
       $(function () {
         bsCustomFileInput.init();
+        $('.select2').select2();
+        $('.select2-no-search').select2({
+            minimumResultsForSearch: -1
+        });
+        $('.jq-summernote').summernote();
+        $('.jq-summernote-200').summernote({height: 200});
+        $('.jq-summernote-500').summernote({height: 500});
       });
     </script>
     @yield('scripts')

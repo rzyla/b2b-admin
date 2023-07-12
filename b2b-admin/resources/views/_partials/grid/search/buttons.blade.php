@@ -1,0 +1,2 @@
+<button type="submit" class="btn btn-primary float-right" title="{{ __('view.form.search.filters.set') }}"><i class="fas fa-filter"></i></button>
+<a class="btn btn-danger float-right margin-right-10" href="{{ route('filters.clear', ['prefix' => $application->getPrefix()]) }}" title="{{ __('view.form.search.filters.clear') }}"><i class="fas fa-ban"></i></a>

@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Auth;
 use App\Http\Controllers\BaseController;
-use App\Helpers\ImageHelper;
 use App\Models\User;
+use App\Services\AccountService;
+use App\Services\UsersService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -18,34 +19,25 @@ class AccountController extends BaseController
         parent::__construct('account');
     }
 
-    public function show()
+    public function edit()
     {
         $this->init();
 
         $user = Auth::user();
 
-        return view('account.show')
+        return view('account.edit')
             ->with('application', $this->application)
             ->with('user', $user);
     }
 
-    public function update(Request $request)
+    public function update(Request $request, AccountService $accountService, UsersService $usersService)
     {
-        $messages = 
-        [
-            'name.required' => __('validation.first_last_name_required'),
-            'email.required' => __('validation.email_required'),
-            'email.email' => __('validation.email_email_is_not_email'),
-            'email.unique' => __('validation.email_unique'),
-            'password.required' => __('validation.password_required'),
-            'password.min' => __('validation.password_to_short'),
-        ];
-        
         $validator = Validator::make($request->all(), 
         [
             'name' => 'required',
-            'email' => ['required', 'email', Rule::unique('users')->ignore(Auth::id())],
-        ], $messages);
+            'email' => ['required', 'email', Rule::unique(app(User::class)->getTable())->ignore(Auth::id())],
+        ], 
+        $accountService->validationMessages());
         
         $validator->sometimes('password', 'required|min:'.$this->application->minimumPasswordLength(), function ($input) 
         {
@@ -61,31 +53,11 @@ class AccountController extends BaseController
         }
 
         $input = $request->all();
-        $user = User::find(Auth::id());
-    
-        if(!empty($input['password']))
-        {
-            $input['password'] = Hash::make($input['password']);
-        }
-        else
-        {
-            unset($input['password']);
-        }
-
-        if (!empty($input['deleteAvatar']))
-        {
-            ImageHelper::Delete($this->application, $user, 'avatar');
-        }
-        
-        if (!empty($input['avatar']) || !empty($input['deleteAvatar']))
-        {
-            $input['avatar'] = ImageHelper::Save($this->application, $request, 'avatar');
-        }
-
-        $user->update($input);
+        $usersService->updateUser($input, Auth::id());
+        $accountService->updateUserAvatar($this->application, $request, Auth::id());
 
         return redirect()
             ->route('account')
-            ->with('success', __('messages.edit_success'));
+            ->with('success', __('view.message.success.edit'));
     }
 }
