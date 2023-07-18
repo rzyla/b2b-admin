@@ -5,6 +5,7 @@ use App\Http\Controllers\AttributesController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BannersController;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\ConfigurationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExchangesController;
 use App\Http\Controllers\FiltersController;
@@ -57,6 +58,12 @@ Route::group( ['middleware' => 'auth' ], function()
         ]);
     });
 
+    Route::controller(ConfigurationController::class)->group(function () 
+    {
+        Route::get('/configuration', 'edit')->name('configuration');
+        Route::put('/configuration', 'update')->name('configuration.update');
+    });
+
     Route::any('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::any('/', [DashboardController::class, 'index']);
 
@@ -70,8 +77,8 @@ Route::group( ['middleware' => 'auth' ], function()
 
     Route::controller(FiltersController::class)->group(function () 
     {
-        Route::get('/filters/{prefix}', 'clearFilters')->name('filters.clear');
-        Route::post('/filters/{prefix}', 'setFilters')->name('filters');
+        Route::post('/filters/{prefix}/{redirect?}', 'setFilters')->name('filters');
+        Route::post('/atributes/{prefix}', 'setAtributeFilter')->name('attributes');
         Route::get('/orderBy/{prefix}/{orderBy?}/{orderDir?}', 'setOrderBy')->name('orderBy');
     });
 

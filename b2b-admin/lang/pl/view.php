@@ -41,12 +41,17 @@ return
     "breadcrumb.user.create" => "Nowy administrator",
     "breadcrumb.user.edit" => "Edycja administratora",
 
+    // configuration
+    "configuration.label.language_id" => "Domyślny język",
+
     // form
     "form.select_file_to_upload" => "Wybierz",
     "form.search.labels.data.basic" => "Dane podstawowe",
     "form.search.labels.data.details" => "Dane szczegółówe",
     "form.search.labels.data.edit" => "Dane edycji",
     "form.search.labels.data.meta" => "Dane meta",
+    "form.search.labels.attributes" => "Atrybuty",
+    "form.search.labels.filters" => "Filtry",
     "form.search.labels.search" => "Szukaj",
     "form.search.filters.set" => "Filtruj",
     "form.search.filters.clear" => "Wyczyść",
@@ -90,6 +95,7 @@ return
     "sidebar.link.dashboard" => "Strona główna",
     "sidebar.link.account" => "Moje konto",
     "sidebar.link.users" => "Administratorzy",
+    "sidebar.link.configuration" => "Konfiguracja",
     "sidebar.link.products" => "Produkty",
     "sidebar.link.names" => "Nazwy produktów",
     "sidebar.link.packages" => "Opakowania",

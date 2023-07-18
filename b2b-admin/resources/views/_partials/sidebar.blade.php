@@ -79,6 +79,12 @@
             <p>{{ __('view.sidebar.link.users') }}</p>
           </a>
         </li>
+        <li class="nav-item">
+          <a href="{{ route('configuration') }}" class="nav-link {{ $application->getPrefix() == 'configuration' ? 'active' : '' }}">
+            <i class="nav-icon fas fa-cogs"></i>
+            <p>{{ __('view.sidebar.link.configuration') }}</p>
+          </a>
+        </li>
       </ul>
     </nav>
   </div>

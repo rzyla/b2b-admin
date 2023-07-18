@@ -2,6 +2,11 @@
 
 namespace App\Models;
 
+use App\Models\Application\ApplicationBreadcrumb;
+use App\Models\Application\ApplicationButtons;
+use App\Models\Application\ApplicationFilters;
+use App\Models\Application\ApplicationMeta;
+use App\Models\Application\ApplicationUser;
 use Illuminate\Support\Facades\Session;
 
 class Application 
@@ -27,24 +32,24 @@ class Application
         $this->filters = new ApplicationFilters();
         $this->prefix = $prefix;
 
-        $this->InitPaths();
-        $this->InitLocalizer();
-        $this->InitBreadcrumb();
+        $this->initPaths();
+        $this->initLocalizer();
+        $this->initBreadcrumb();
     }
 
-    private function InitPaths()
+    private function initPaths()
     {
         $this->uploadSourceDir = public_path('uploads/') . $this->prefix;
         $this->uploadThumbsDir = public_path('thumbs/uploads/') . $this->prefix;
     }
 
-    private function InitLocalizer()
+    private function initLocalizer()
     {
         $this->name = __('view.application.name');
         $this->meta->title = __('view.application.default.title');
     }
 
-    private function InitBreadcrumb()
+    private function initBreadcrumb()
     {
         $this->breadcrumb = new ApplicationBreadcrumb();
         $this->breadcrumb->add(__('view.sidebar.link.dashboard'), 'dashboard', []);
@@ -55,14 +60,25 @@ class Application
         }
     }
     
-    public function InitSessionMessages()
+    public function initSessionMessages()
     {
         $this->success = !empty(Session::get('success')) ? Session::get('success') : '';
     }
 
-    public function InitUser(?User $user)
+    public function initUser(?User $user)
     {
         $this->user = new ApplicationUser($user);
+    }
+
+    public function initCollapseCards($cardsToHide)
+    {
+        foreach($cardsToHide as $key => $value)
+        {
+            if(!$this->existsFilter($key))
+            {
+                $this->setFilter($key, $value);
+            }
+        }
     }
 
     public function minimumPasswordLength()
@@ -103,7 +119,22 @@ class Application
 
     public function getFilter(string $key)
     {
-        return $this->filters->get($this->prefix, $key);
+        return $this->filters->get($this->prefix, $key, 'filters');
+    }
+
+    public function getAttributes()
+    {
+        return $this->filters->getArray($this->prefix, 'attributes');
+    }
+
+    public function existsFilter(string $key)
+    {
+        return $this->filters->exists($this->prefix, $key, 'filters');
+    }
+
+    public function setFilter(string $key, ?string $value)
+    {
+        return $this->filters->set($this->prefix, $key, $value, 'filters');
     }
 
     public function setOrderBy($prefix, ?string $value, ?string $key = 'orderBy')
@@ -129,137 +160,5 @@ class Application
     public function getSuccess()
     {
         return $this->success;
-    }
-}
-
-class ApplicationMeta
-{
-    public string $title;
-}
-
-class ApplicationUser
-{
-    public ?string $avatar;
-    public ?string $name;
-
-    public function __construct(?User $user = null)
-    {
-        $this->avatar = $this->avatarUrl($user?->avatar);
-        $this->name = $user?->name;
-    }
-
-    private function avatarUrl(?string $avatar)
-    {
-        return empty($avatar)
-            ? "assets/images/avatar.png"
-            : "uploads/account/".$avatar;
-    }
-}
-
-class ApplicationBreadcrumb
-{
-    private array $breadcrumb;
-
-    public function __construct()
-    {
-        $this->breadcrumb = [];
-    }
-
-    public function add(string $name, string $route, array $params)
-    {
-        foreach($this->breadcrumb as $value)
-        {
-            $value->active = false;
-        }
-
-        array_push($this->breadcrumb, new ApplicationBreadcrumbItem($name, $route, true, $params));
-    }
-
-    public function get()
-    {
-        return $this->breadcrumb;
-    }
-}
-
-class ApplicationBreadcrumbItem
-{
-    public string $name;
-    public string $route;
-    public bool $active;
-    public array $params;
-
-    public function __construct(string $name, string $route, bool $active, array $params)
-    {
-        $this->name = $name;
-        $this->route = $route;
-        $this->active = $active;
-        $this->params = $params;
-    }
-}
-
-class ApplicationButtons
-{
-    private array $buttons;
-
-    public function __construct()
-    {
-        $this->buttons = [];
-    }
-
-    public function add(string $name, string $route, string $class, string $ico)
-    {
-        $this->buttons[$name] = new ApplicationButtonsItem($name, $route, $class, $ico);
-    }
-
-    public function get()
-    {
-        return $this->buttons;
-    }
-}
-
-class ApplicationButtonsItem
-{
-    public string $name;
-    public string $route;
-    public string $class;
-    public string $ico;
-
-    public function __construct(string $name, string $route, string $class, string $ico)
-    {
-        $this->name = $name;
-        $this->route = $route;
-        $this->class = $class;
-        $this->ico = $ico;
-    }
-}
-
-class ApplicationFilters
-{
-    public function add(string $prefix, string $key, ?string $value)
-    {
-        session([$this->sessionKey($prefix, $key) => $value]);
-    }
-
-    public function get(string $prefix, string $key)
-    {
-        return session($this->sessionKey($prefix, $key));
-    }
-
-    public function clear($prefix)
-    {
-        foreach(session()->all() as $key => $value)
-        {
-            $explode = explode('_', $key);
-
-            if($explode[0] == $prefix && $explode[2] != 'orderBy' && $explode[2] != 'orderDir')
-            {
-                session([$key => null]);
-            }
-        }
-    }
-
-    private function sessionKey(string $prefix, string $key) : string
-    {
-        return $prefix . '_filters_' . $key;
     }
 }

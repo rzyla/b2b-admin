@@ -1,3 +1,8 @@
+form {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
 .nav-link-user-dropdown {
     padding-top: 0 !important;
     padding-bottom: 0 !important;
@@ -37,7 +42,7 @@
     margin-bottom: 20px;
 }
 .margin-bottom-0 {
-    margin-bottom: 0;
+    margin-bottom: 0 !important;
 }
 .margin-right-5 {
     margin-right: 5px;
@@ -60,9 +65,34 @@
 .d-none {
     display: none;
 }
+.d-block {
+    display: block;
+    flex: inherit;
+}
 .links .small.text-muted {
    display: none !important;
 }
 .buttons-bottom {
     padding-bottom: 20px;
+}
+.card-content {
+    margin-top: 10px;
+}
+.open-close-card {
+    margin-bottom: 0px !important;
+    border-radius: 0 !important;
+}
+.open-close-card .card-title {
+    font-weight: 600 !important;
+}
+.form-group-margin-for-icons {
+    margin-right: 100px;
+}
+.form-group-margin-icons {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.form-group-margin-icons .btn {
+    padding: 10px;
 }
