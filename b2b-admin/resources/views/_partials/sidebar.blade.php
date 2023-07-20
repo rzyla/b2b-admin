@@ -1,6 +1,6 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <a href="{{ route('dashboard') }}" class="brand-link text-center">
-    <span class="brand-text font-weight-light">{{ $application->getName() }}</span>
+    <span class="brand-text font-weight-light">{{ __('view.application.name') }}</span>
   </a>
   <div class="sidebar">
     <nav class="mt-2">

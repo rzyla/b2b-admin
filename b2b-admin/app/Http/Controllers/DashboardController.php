@@ -8,14 +8,15 @@ class DashboardController extends BaseController
 {
     function __construct()
     {
-        parent::__construct();
+        parent::__construct('dashboard');
     }
 
     public function index()
     {
-        $this->init();
-
+        $this->init('index');
+        
         return view('dashboard.index')
-            ->with('application', $this->application);
+            ->with('application', $this->application)
+            ->with('filter', $this->filter);
     }
 }

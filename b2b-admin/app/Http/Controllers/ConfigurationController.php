@@ -18,11 +18,13 @@ class ConfigurationController extends BaseController
 
     public function edit(ConfigurationService $configurationService, LanguagesService $languagesService)
     {
-        $this->init();
+        $this->init('edit');
+        $this->filter->initShow($configurationService->editInitShow());
 
         return view('configuration.edit')
             ->with('application', $this->application)
             ->with('configuration', $configurationService->get())
+            ->with('filter', $this->filter)
             ->with('languages', $languagesService->getAllLanguages());
     }
 

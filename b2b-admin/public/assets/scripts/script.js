@@ -17,21 +17,14 @@ $(document).ready(function()
 
 	$('.jq-open-close-card button').click(function(e)
 	{
-		var visible = 0;
+		var visible = false;
 
 		if($(this).attr('data-card-widget') == 'remove' || ($(this).attr('data-card-widget') == 'collapse' && !$(this).closest('.jq-open-close-card').hasClass('collapsed-card')))
 		{
-			visible = 1;
+			visible = true;
 		}
 
-		var array = {};
-		array['filters[' + $(this).closest('.jq-open-close-card').attr('data-card') + ']'] = visible;
-
-		$.ajax({
-			url: $('.jq-open-close-card-form').attr('action') + '/no-redirect',
-			data: array,
-			type: 'post'
-		  });
+		$.get($('meta[name="set-show"]').attr('content') + '/' + $(this).closest('.jq-open-close-card').attr('data-card') + '/' + visible);
 	});
 
 	$('.jq-open-close-card-clear').click(function(e)
@@ -43,7 +36,7 @@ $(document).ready(function()
 			$(this).val($(this).attr('data-default-value'));
 		});
 
-		$(this).find('.jq-open-close-card select').each(function() 
+		$(this).closest('.jq-open-close-card').find('select').each(function() 
 		{
 			$(this).val($(this).attr('data-default-value')).change();
 		});

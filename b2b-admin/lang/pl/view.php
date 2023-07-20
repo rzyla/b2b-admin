@@ -14,6 +14,7 @@ return
     "auth.placeholder.email_address" => "Adress e-mail",
     "auth.placeholder.password" => "Hasło",
     "auth.label.remember_me" => "Zapamiętaj mnie",
+    "auth.meta.title" => "Logowanie",
 
     // account
     "account.label.avatar" => "Zdjęcie",
@@ -42,19 +43,32 @@ return
     "breadcrumb.user.edit" => "Edycja administratora",
 
     // configuration
-    "configuration.label.language_id" => "Domyślny język",
+    "configuration.label.language_id" => "Język zapytań SQL",
+    "configuration.label.pagination_size" => "Wielkość pagera",
+    "configuration.label.minimum_password_length" => "Minimalna długość hasła",
 
     // form
+    "form.edit.labels.data.basic" => "Dane podstawowe",
+    "form.edit.labels.data.details" => "Dane szczegółówe",
+    "form.edit.labels.data.edit" => "Dane edycji",
+    "form.edit.labels.data.image" => "Zdjęcie",
+    "form.edit.labels.data.meta" => "Dane meta",
+    "form.edit.labels.data.settings" => "Ustawienia",
     "form.select_file_to_upload" => "Wybierz",
-    "form.search.labels.data.basic" => "Dane podstawowe",
-    "form.search.labels.data.details" => "Dane szczegółówe",
-    "form.search.labels.data.edit" => "Dane edycji",
-    "form.search.labels.data.meta" => "Dane meta",
     "form.search.labels.attributes" => "Atrybuty",
     "form.search.labels.filters" => "Filtry",
     "form.search.labels.search" => "Szukaj",
     "form.search.filters.set" => "Filtruj",
     "form.search.filters.clear" => "Wyczyść",
+
+    "form.search.labels.categories" => "Kategoria",
+    "form.search.labels.groups" => "Grupa produktów",
+    "form.search.labels.producer" => "Producent",
+    "form.search.labels.supplier" => "Dostawca",
+    "form.search.labels.active" => "Aktywny",
+    "form.search.labels.picture.no" => "Bez zdjęcia",
+    "form.search.labels.picture.no.active" => "Bez aktywnego zdjęcia",
+    "form.search.labels.picture.wrong" => "Z błędnym zdjęciem",
 
     // messages
     "message.success.add" => "Wpis dodany pomyślnie",

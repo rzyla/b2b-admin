@@ -2,38 +2,58 @@
 
 namespace App\Services;
 
-use App\Models\Application;
+use App\Models\Filter;
 use App\Models\Pages;
 
 class PagesService 
 {
-    public function grid(Application $application)
+    public function indexInitShow() : array
+    {
+        return  
+        [
+            'search' => false,
+            'filter' => true
+        ];
+    }
+
+    public function editInitShow() : array
+    {
+        return  
+        [
+            'basic' => false,
+            'details' => false,
+            'meta' => true,
+            'edit' => true
+        ];
+    }
+    
+    public function grid(Filter $filter, int $pager_size)
     {
         $query = Pages::select('admin_pages.*', 'language.name as language')
             ->join('language', 'admin_pages.language_id', '=', 'language.language_id');
 
-        if(!empty($application->getFilter('search')))
+        if(!empty($filter->getFilter('search')))
         {
-            $query->where('symbol', 'like', '%' . $application->getFilter('search') . '%')
-                ->orWhere('title', 'like', '%' . $application->getFilter('search') . '%');
+            $query->where('symbol', 'like', '%' . $filter->getFilter('search') . '%')
+                ->orWhere('title', 'like', '%' . $filter->getFilter('search') . '%');
         }
 
-        if(!empty($application->getFilter('language')))
+        if(!empty($filter->getFilter('language')))
         {
-            $query->where('admin_pages.language_id', $application->getFilter('language'));
+            $query->where('admin_pages.language_id', $filter->getFilter('language'));
         }
 
-        if(!is_null($application->getFilter('published')))
+        if(!is_null($filter->getFilter('published')))
         {
-            $query->where('published', $application->getFilter('published'));
+            $query->where('published', $filter->getFilter('published'));
         }
 
-        if(!empty($application->getOrderBy()))
+        if(!empty($filter->getOrderBy()))
         {
-            $query->orderBy($application->getOrderBy(), $application->getOrderDir());
+            $query->orderBy($filter->getOrderBy(), $filter->getOrderDir());
         }
 
-        return $query->paginate($application->paginate());
+        return $query->paginate($pager_size);
     }
 
     public function getPage($id) : Pages

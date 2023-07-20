@@ -6,6 +6,7 @@ use Auth;
 use App\Http\Controllers\BaseController;
 use App\Helpers\ImageHelper;
 use App\Models\User;
+use App\Services\ConfigurationService;
 use App\Services\UsersService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -18,29 +19,34 @@ class UsersController extends BaseController
         parent::__construct('users');
     }
 
-    public function index(UsersService $usersService)
+    public function index(ConfigurationService $configurationService, UsersService $usersService)
     {
-        $this->init();
+        $this->init('index');
+        $this->filter->initShow($usersService->indexInitShow());
         $this->application->buttons->add(__('view.button.add'), 'users.create', $this->buttonTypesEnum->outlinePrimary, $this->buttonsEnum->plus);
 
-        $grid = $usersService->grid($this->application);
+        $grid = $usersService->grid($this->filter, $configurationService->getpaginationSize());
         
         return view('users.index')
             ->with('application', $this->application)
+            ->with('filter', $this->filter)
             ->with('grid', $grid);
     }
 
-    public function create()
+    public function create(ConfigurationService $configurationService, UsersService $usersService)
     {
-        $this->init();
+        $this->init('edit');
+        $this->filter->initShow($usersService->editInitShow());
         $this->application->breadcrumb->add(__('view.breadcrumb.user.create'), 'users.create', []);
         $this->application->setTitle(__('view.breadcrumb.user.create'));
 
         return view('users.create')
-            ->with('application', $this->application);
+            ->with('application', $this->application)
+            ->with('filter', $this->filter)
+            ->with('minimum_password_length', $configurationService->getMinimumPasswordLength());
     }
 
-    public function store(Request $request, UsersService $usersService)
+    public function store(ConfigurationService $configurationService, Request $request, UsersService $usersService)
     {
         $input = $request->all();
         
@@ -51,7 +57,7 @@ class UsersController extends BaseController
             'password' => 'required',
         ], 
         $usersService->validationMessages());
-        $validator->sometimes('password', 'required|min:'.$this->application->minimumPasswordLength(), function ($input) 
+        $validator->sometimes('password', 'required|min:'.$configurationService->getMinimumPasswordLength(), function ($input) 
         {
             return !empty($input->password);
         });
@@ -71,20 +77,23 @@ class UsersController extends BaseController
             ->with('success', __('view.message.success.add'));
     }
 
-    public function edit(UsersService $usersService, $id)
+    public function edit(ConfigurationService $configurationService, UsersService $usersService, $id)
     {
         $user = $usersService->getUser($id);
         
-        $this->init();
+        $this->init('edit');
+        $this->filter->initShow($usersService->editInitShow());
         $this->application->breadcrumb->add(__('view.breadcrumb.user.edit'), 'users.edit', [$user->id]);
         $this->application->setTitle(__('view.breadcrumb.user.edit') . ': '. $user->name);
 
         return view('users.edit')
             ->with('application', $this->application)
+            ->with('filter', $this->filter)
+            ->with('minimum_password_length', $configurationService->getMinimumPasswordLength())
             ->with('user', $user);
     }
 
-    public function update(Request $request, UsersService $usersService, $id)
+    public function update(ConfigurationService $configurationService, Request $request, UsersService $usersService, $id)
     {
         $input = $request->all();
 
@@ -94,7 +103,7 @@ class UsersController extends BaseController
             'email' => ['required', 'email', Rule::unique(app(User::class)->getTable())->ignore($id)],
         ], 
         $usersService->validationMessages());
-        $validator->sometimes('password', 'required|min:'.$this->application->minimumPasswordLength(), function ($input) 
+        $validator->sometimes('password', 'required|min:'.$configurationService->getMinimumPasswordLength(), function ($input) 
         {
             return !empty($input->password);
         });

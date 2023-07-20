@@ -2,7 +2,7 @@
 
 namespace App\Models\Application;
 
-class ApplicationBreadcrumb
+class Breadcrumb
 {
     private array $breadcrumb;
 
@@ -18,7 +18,7 @@ class ApplicationBreadcrumb
             $value->active = false;
         }
 
-        array_push($this->breadcrumb, new ApplicationBreadcrumbItem($name, $route, true, $params));
+        array_push($this->breadcrumb, new BreadcrumbItem($name, $route, true, $params));
     }
 
     public function get()
@@ -27,7 +27,7 @@ class ApplicationBreadcrumb
     }
 }
 
-class ApplicationBreadcrumbItem
+class BreadcrumbItem
 {
     public string $name;
     public string $route;

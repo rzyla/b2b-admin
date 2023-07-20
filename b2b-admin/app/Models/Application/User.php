@@ -2,14 +2,14 @@
 
 namespace App\Models\Application;
 
-use App\Models\User;
+use App\Models\User as Auth;
 
-class ApplicationUser
+class User
 {
     public ?string $avatar;
     public ?string $name;
 
-    public function __construct(?User $user = null)
+    public function __construct(?Auth $user = null)
     {
         $this->avatar = $this->avatarUrl($user?->avatar);
         $this->name = $user?->name;

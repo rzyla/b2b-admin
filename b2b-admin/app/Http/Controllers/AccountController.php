@@ -6,6 +6,7 @@ use Auth;
 use App\Http\Controllers\BaseController;
 use App\Models\User;
 use App\Services\AccountService;
+use App\Services\ConfigurationService;
 use App\Services\UsersService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -19,18 +20,21 @@ class AccountController extends BaseController
         parent::__construct('account');
     }
 
-    public function edit()
+    public function edit(AccountService $accountService, ConfigurationService $configurationService)
     {
-        $this->init();
+        $this->init('edit');
+        $this->filter->initShow($accountService->editInitShow());
 
         $user = Auth::user();
 
         return view('account.edit')
             ->with('application', $this->application)
-            ->with('user', $user);
+            ->with('filter', $this->filter)
+            ->with('user', $user)
+            ->with('minimum_password_length', $configurationService->getMinimumPasswordLength());
     }
 
-    public function update(Request $request, AccountService $accountService, UsersService $usersService)
+    public function update(AccountService $accountService, Request $request, UsersService $usersService)
     {
         $validator = Validator::make($request->all(), 
         [

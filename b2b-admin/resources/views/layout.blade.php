@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <meta name="set-show" content="{{ route('setShow', ['prefix' => $filter->getPrefix(), 'action' => $filter->getAction()]) }}" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <link rel="stylesheet" href="/assets/plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
@@ -28,7 +29,7 @@
             content: "{{ __('view.form.select_file_to_upload') }}" !important;
         }
     </style>
-    <title>{{ $application->meta->title }} - {{ $application->getTitle() }}</title>
+    <title>{{ $application->getMetaTitle() }}</title>
   </head>
   <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
@@ -56,7 +57,9 @@
     <script src="/assets/scripts/adminlte.min.js"></script>
     <script src="/assets/scripts/script.js"></script>
 
-    <script src="/assets/plugins/chart.js/Chart.min.js"></script>
+    <script src="/assets/plugins/summernote/summernote-bs4.min.js"></script>
+
+    {{--<script src="/assets/plugins/chart.js/Chart.min.js"></script>
     <script src="/assets/plugins/sparklines/sparkline.js"></script>
     <script src="/assets/plugins/jqvmap/jquery.vmap.min.js"></script>
     <script src="/assets/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
@@ -64,8 +67,8 @@
     <script src="/assets/plugins/moment/moment.min.js"></script>
     <script src="/assets/plugins/daterangepicker/daterangepicker.js"></script>
     <script src="/assets/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
-    <script src="/assets/plugins/summernote/summernote-bs4.min.js"></script>
-    <script src="/assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    
+    <script src="/assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>--}}
     <script>
       $(function () {
         bsCustomFileInput.init();

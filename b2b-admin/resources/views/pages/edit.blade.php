@@ -5,8 +5,8 @@
         @csrf
         <input name="_method" type="hidden" value="PUT">
 
-        <div class="card card-default">
-            @include('_partials.edit.card.header', ['title' => __('view.form.search.labels.data.basic'), 'collapse' => false])
+        <div class="card card-default open-close-card jq-open-close-card @if(!empty($filter->getShow('basic'))) collapsed-card @endif" data-card="basic">
+            @include('_partials.card.header', ['title' => __('view.form.edit.labels.data.basic'), 'collapse' => !empty($filter->getShow('basic')) ? true : false])
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
@@ -49,8 +49,9 @@
                 </div>
             </div>
         </div>
-        <div class="card card-default">
-            @include('_partials.edit.card.header', ['title' => __('view.form.search.labels.data.details'), 'collapse' => false])
+
+        <div class="card card-default open-close-card jq-open-close-card @if(!empty($filter->getShow('details'))) collapsed-card @endif" data-card="details">
+            @include('_partials.card.header', ['title' => __('view.form.edit.labels.data.details'), 'collapse' => !empty($filter->getShow('details')) ? true : false])
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
@@ -66,9 +67,10 @@
                 </div>
             </div>
         </div>
-        <div class="card card-default collapsed-card">
-            @include('_partials.edit.card.header', ['title' => __('view.form.search.labels.data.meta'), 'collapse' => true])
-            <div class="card-body" style="display: none">
+
+        <div class="card card-default open-close-card jq-open-close-card @if(!empty($filter->getShow('meta'))) collapsed-card @endif" data-card="meta">
+            @include('_partials.card.header', ['title' => __('view.form.edit.labels.data.meta'), 'collapse' => !empty($filter->getShow('meta')) ? true : false])
+            <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
@@ -87,9 +89,10 @@
                 </div>
             </div>
         </div>
-        <div class="card card-default collapsed-card">
-            @include('_partials.edit.card.header', ['title' => __('view.form.search.labels.data.edit'), 'collapse' => true])
-            <div class="card-body" style="display: none">
+
+        <div class="card card-default open-close-card jq-open-close-card @if(!empty($filter->getShow('edit'))) collapsed-card @endif" data-card="edit">
+            @include('_partials.card.header', ['title' => __('view.form.edit.labels.data.edit'), 'collapse' => !empty($filter->getShow('edit')) ? true : false])
+            <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
@@ -105,7 +108,7 @@
             </div>
         </div>
 
-        <div class="clearfix buttons-bottom">
+        <div class="clearfix buttons-bottom margin-top-20">
             <button type="submit" class="btn btn-primary float-right">{{ __('view.button.save') }}</button>
         </div>
     </form>

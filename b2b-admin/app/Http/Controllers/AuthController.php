@@ -18,6 +18,7 @@ class AuthController extends BaseController
     public function form(Request $request)
     {
         $this->init();
+        $this->application->setTitle(__('view.auth.meta.title'));
 
         if(Auth::check())
         {

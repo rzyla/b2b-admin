@@ -8,17 +8,17 @@ use Illuminate\Http\Request;
 
 class ProductsService 
 {
-    public function indexCollapseCards() : array
+    public function indexInitShow() : array
     {
         return  
         [
-            'show_index_search' => false,
-            'show_index_attributes' => true,
-            'show_index_filters' => true
+            'search' => false,
+            'attributes' => true,
+            'filters' => true
         ];
     }
 
-    public function grid(Application $application, $language_id)
+    public function grid(Application $application, int $language_id, int $pager_size)
     {
         $query = Products::select('*');
 
@@ -84,6 +84,6 @@ class ProductsService
             $query->orderBy($application->getOrderBy(), $application->getOrderDir());
         }*/
 
-        return $query->paginate($application->paginate());
+        return $query->paginate($pager_size);
     }
 }

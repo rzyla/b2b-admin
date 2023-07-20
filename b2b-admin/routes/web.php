@@ -77,9 +77,10 @@ Route::group( ['middleware' => 'auth' ], function()
 
     Route::controller(FiltersController::class)->group(function () 
     {
-        Route::post('/filters/{prefix}/{redirect?}', 'setFilters')->name('filters');
-        Route::post('/atributes/{prefix}', 'setAtributeFilter')->name('attributes');
-        Route::get('/orderBy/{prefix}/{orderBy?}/{orderDir?}', 'setOrderBy')->name('orderBy');
+        Route::post('/setAtributes/{prefix}/{action}', 'setAtributeFilter')->name('setAtributes');
+        Route::get('/setOrderBy/{prefix}/{action}/{orderBy?}/{orderDir?}', 'setOrderBy')->name('setOrderBy');
+        Route::post('/setFilters/{prefix}/{action}', 'setFilters')->name('setFilters');
+        Route::get('/setShow/{prefix}/{action}/{key?}/{value?}', 'setShow')->name('setShow');
     });
 
     Route::controller(GroupsController::class)->group(function () 

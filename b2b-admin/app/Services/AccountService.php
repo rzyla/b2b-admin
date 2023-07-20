@@ -9,6 +9,14 @@ use Illuminate\Http\Request;
 
 class AccountService 
 {
+    public function editInitShow() : array
+    {
+        return  
+        [
+            'basic' => false,
+            'image' => true
+        ];
+    }
 
     public function updateUserAvatar(Application $application, Request $request, $id) : User
     {

@@ -1,2 +1,2 @@
 <button type="submit" class="btn btn-primary float-right" title="{{ __('view.form.search.filters.set') }}"><i class="fas fa-filter"></i></button>
-<a class="btn btn-danger float-right margin-right-10" href="" title="{{ __('view.form.search.filters.clear') }}"><i class="fas fa-ban"></i></a>
+<a class="btn btn-danger float-right margin-right-10 jq-open-close-card-clear" href="" title="{{ __('view.form.search.filters.clear') }}"><i class="fas fa-ban"></i></a>

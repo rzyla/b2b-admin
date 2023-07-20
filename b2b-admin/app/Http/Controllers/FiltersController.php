@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Application;
+use App\Models\Filter;
 use Illuminate\Routing\Controller as Controller;
 use Illuminate\Support\Facades\Request;
 
@@ -15,44 +16,56 @@ class FiltersController extends Controller
         $this->application = new Application();
     }
 
-    public function setFilters(string $prefix, string $redirect = 'back')  
+    public function setAtributes(string $prefix, string $action, string $key, ?string $value = null)  
     {
+        $this->filter = new Filter();
+        $this->filter->init($prefix, $action);
+
+        $request = Request::all();
+        
+        if(!empty($request['attributes']))
+        {
+            foreach($request['attributes'] as $key)
+            {
+                $this->filter->setAttribute($key, $value);
+            }
+        }
+
+        return back();
+    }
+
+    public function setFilters(string $prefix, string $action)  
+    {
+        $this->filter = new Filter();
+        $this->filter->init($prefix, $action);
+
         $request = Request::all();
         
         if(!empty($request['filters']))
         {
             foreach($request['filters'] as $key => $value)
             {
-                $this->application->filters->set($prefix, $key, $value, 'filters');
+                $this->filter->setFilter($key, $value);
             }
         }
 
-        if($redirect == 'back')
-        {
-            return back();
-        }
+        return back();
     }
 
-    public function setAtributeFilter(string $prefix)  
+    public function setOrderBy(string $prefix, string $action, ?string $orderBy = null, ?string $orderDir = null)
     {
-        $request = Request::all();
+        $this->filter = new Filter();
+        $this->filter->init($prefix, $action);
+        $this->filter->setOrderBy($orderBy);
+        $this->filter->setOrderDir($orderDir);
         
-        if(!empty($request['filters']))
-        {
-            foreach($request['filters'] as $key)
-            {
-                $this->application->filters->set($prefix, $key, null, 'attributes');
-            }
-        }
-
         return back();
     }
 
-    public function setOrderBy($prefix, ?string $orderBy = null, ?string $orderDir = null)
+    public function setShow(string $prefix, string $action, string $key, ?string $value = null)
     {
-        $this->application->setOrderBy($prefix, $orderBy);
-        $this->application->setOrderDir($prefix, $orderDir);
-
-        return back();
+        $this->filter = new Filter();
+        $this->filter->init($prefix, $action);
+        $this->filter->setShow($key, $value == "true" ? true : false);
     }
 }

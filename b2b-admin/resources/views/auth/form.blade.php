@@ -9,11 +9,11 @@
         <link rel="stylesheet" href="/assets/styles/adminlte.min.css">
         <link rel="stylesheet" href="/assets/styles/style.css">
         @yield('styles')
-        <title>{{ $application->meta->title }}</title>
+        <title>{{ $application->getMetaTitle() }}</title>
     </head>
     <body class="hold-transition login-page">
         <div class="login-box">
-        <div class="login-logo">{{ $application->getName() }}</div>
+        <div class="login-logo">{{ __('view.application.name') }}</div>
             @include('_partials/alert')
             <div class="card">
                 <div class="card-body login-card-body">

@@ -4,11 +4,11 @@
     <form method="POST" action="{{ route('pages.store') }}">
         @csrf
 
-        <div class="card card-default">
-            @include('_partials.edit.card.header', ['title' => __('view.form.search.labels.data.basic'), 'collapse' => false])
+        <div class="card card-default open-close-card jq-open-close-card @if(!empty($filter->getShow('basic'))) collapsed-card @endif" data-card="basic">
+            @include('_partials.card.header', ['title' => __('view.form.edit.labels.data.basic'), 'collapse' => !empty($filter->getShow('basic')) ? true : false])
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-12">
+                <div class="col-md-12">
                         <div class="form-group">
                             <label for="title">{{ __('view.users.label.title') }}</label>
                             <input type="text" class="form-control" id="title" name="title" placeholder="" value="{{ !empty(old('title')) ? old('title') : '' }}">
@@ -48,33 +48,30 @@
                 </div>
             </div>
         </div>
-        <div class="card card-default">
-            @include('_partials.edit.card.header', ['title' => __('view.form.search.labels.data.details'), 'collapse' => false])
+
+        <div class="card card-default open-close-card jq-open-close-card @if(!empty($filter->getShow('details'))) collapsed-card @endif" data-card="details">
+            @include('_partials.card.header', ['title' => __('view.form.edit.labels.data.details'), 'collapse' => !empty($filter->getShow('details')) ? true : false])
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-12">
+                <div class="col-md-12">
                         <div class="form-group">
                             <label for="lead">{{ __('view.users.label.lead') }}</label>
-                            <textarea class="jq-summernote-200" name="lead" id="lead">
-                                {{ !empty(old('lead')) ? old('lead') : '' }}
-                            </textarea>
+                            <textarea class="jq-summernote-200" name="lead" id="lead">{{ !empty(old('lead')) ? old('lead') : '' }}</textarea>
                         </div>
                         <div class="form-group">
                             <label for="description">{{ __('view.users.label.description') }}</label>
-                            <textarea class="jq-summernote-500" name="description" id="description">
-                                {{ !empty(old('description')) ? old('description') : '' }}
-                            </textarea>
+                            <textarea class="jq-summernote-500" name="description" id="description">{{ !empty(old('description')) ? old('description') : '' }}</textarea>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="card card-default collapsed-card">
-            @include('_partials.edit.card.header', ['title' => __('view.form.search.labels.data.meta'), 'collapse' => true])
-            <div class="card-body" style="display: none">
+        <div class="card card-default open-close-card jq-open-close-card @if(!empty($filter->getShow('meta'))) collapsed-card @endif" data-card="meta">
+            @include('_partials.card.header', ['title' => __('view.form.edit.labels.data.meta'), 'collapse' => !empty($filter->getShow('meta')) ? true : false])
+            <div class="card-body">
                 <div class="row">
-                    <div class="col-md-12">
+                <div class="col-md-12">
                         <div class="form-group">
                             <label for="meta_title">{{ __('view.meta.label.title') }}</label>
                             <input type="text" class="form-control" id="meta_title" name="meta_title" placeholder="" value="{{ !empty(old('meta_title')) ? old('meta_title') : '' }}">
@@ -91,9 +88,10 @@
                 </div>
             </div>
         </div>
-        <div class="card card-default collapsed-card">
-            @include('_partials.edit.card.header', ['title' => __('view.form.search.labels.data.edit'), 'collapse' => true])
-            <div class="card-body" style="display: none">
+
+        <div class="card card-default open-close-card jq-open-close-card @if(!empty($filter->getShow('edit'))) collapsed-card @endif" data-card="edit">
+            @include('_partials.card.header', ['title' => __('view.form.edit.labels.data.edit'), 'collapse' => !empty($filter->getShow('edit')) ? true : false])
+            <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
@@ -109,7 +107,7 @@
             </div>
         </div>
 
-        <div class="clearfix buttons-bottom">
+        <div class="clearfix buttons-bottom margin-top-20">
             <button type="submit" class="btn btn-primary float-right">{{ __('view.button.save') }}</button>
         </div>
     </form>

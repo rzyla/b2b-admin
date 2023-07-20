@@ -3,27 +3,44 @@
 namespace App\Services;
 
 use App\Models\Application;
+use App\Models\Filter;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
 class UsersService 
 {
-    public function grid(Application $application)
+    public function indexInitShow() : array
+    {
+        return  
+        [
+            'search' => false
+        ];
+    }
+
+    public function editInitShow() : array
+    {
+        return  
+        [
+            'basic' => false
+        ];
+    }
+
+    public function grid(Filter $filter, int $pager_size)
     {
         $query = User::select('id', 'name', 'email');
 
-        if(!empty($application->getFilter('search')))
+        if(!empty($filter->getFilter('search')))
         {
-            $query->where('name', 'like', '%' . $application->getFilter('search') . '%')
-                ->orWhere('email', 'like', '%' . $application->getFilter('search') . '%');
+            $query->where('name', 'like', '%' . $filter->getFilter('search') . '%')
+                ->orWhere('email', 'like', '%' . $filter->getFilter('search') . '%');
         }
 
-        if(!empty($application->getOrderBy()))
+        if(!empty($filter->getOrderBy()))
         {
-            $query->orderBy($application->getOrderBy(), $application->getOrderDir());
+            $query->orderBy($filter->getOrderBy(), $filter->getOrderDir());
         }
  
-        return $query->paginate($application->paginate());
+        return $query->paginate($pager_size);
     }
 
     public function getUser($id) : User

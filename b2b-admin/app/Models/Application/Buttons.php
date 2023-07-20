@@ -2,7 +2,7 @@
 
 namespace App\Models\Application;
 
-class ApplicationButtons
+class Buttons
 {
     private array $buttons;
 
@@ -13,7 +13,7 @@ class ApplicationButtons
 
     public function add(string $name, string $route, string $class, string $ico)
     {
-        $this->buttons[$name] = new ApplicationButtonsItem($name, $route, $class, $ico);
+        $this->buttons[$name] = new ButtonItem($name, $route, $class, $ico);
     }
 
     public function get()
@@ -22,7 +22,7 @@ class ApplicationButtons
     }
 }
 
-class ApplicationButtonsItem
+class ButtonItem
 {
     public string $name;
     public string $route;
